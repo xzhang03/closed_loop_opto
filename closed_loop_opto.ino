@@ -1,9 +1,9 @@
 // ===================== Configuration =====================
 const uint8_t NUM_CHANNELS = 3;
 
-const uint8_t LICK_PINS[NUM_CHANNELS]  = {3, 4, 5};    // lick TTL inputs, active HIGH
-const uint8_t LED_PINS[NUM_CHANNELS]   = {9, 10, 11};  // LED drive outputs, active HIGH
-const uint8_t DEBUG_PINS[NUM_CHANNELS] = {A3, A4, A5}; // per-channel debug LEDs, active HIGH, mirror LED_PINS
+const uint8_t LICK_PINS[NUM_CHANNELS]  = {A5, A4, A3};    // lick TTL inputs, active HIGH
+const uint8_t LED_PINS[NUM_CHANNELS]   = {5, 6, A2};  // LED drive outputs, active HIGH
+const uint8_t DEBUG_PINS[NUM_CHANNELS] = {2, 3, 4}; // per-channel debug LEDs, active HIGH, mirror LED_PINS
 
 const uint8_t STATUS_LED_PIN = 13; // onboard LED, on whenever any channel LED is on
 

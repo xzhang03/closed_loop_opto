@@ -7,6 +7,8 @@ const uint8_t DEBUG_PINS[NUM_CHANNELS] = {2, 3, 4}; // per-channel debug LEDs, a
 
 const uint8_t STATUS_LED_PIN = 13; // onboard LED, on whenever any channel LED is on
 
+const uint8_t MASTER_SWITCH_PIN = A1; // INPUT_PULLUP; pulled LOW by external switch forces all trains on
+
 const float PULSE_FREQ_HZ          = 10.0; // opto pulse train frequency (Hz)
 const unsigned long PULSE_WIDTH_MS = 10;   // opto pulse ON time per cycle (ms)
 const unsigned long EXTEND_MS      = 500;  // each lick extends the stim train by this much (ms)
@@ -31,11 +33,14 @@ void setup() {
   }
   pinMode(STATUS_LED_PIN, OUTPUT);
   digitalWrite(STATUS_LED_PIN, LOW);
+
+  pinMode(MASTER_SWITCH_PIN, INPUT_PULLUP);
 }
 
 void loop() {
   unsigned long now = millis();
   bool anyLedOn = false;
+  bool masterOverride = digitalRead(MASTER_SWITCH_PIN) == LOW;
 
   for (uint8_t i = 0; i < NUM_CHANNELS; i++) {
     bool lickState = digitalRead(LICK_PINS[i]);
@@ -47,7 +52,7 @@ void loop() {
     }
     lastLickState[i] = lickState;
 
-    bool trainActive = (long)(trainEndTime[i] - now) > 0;
+    bool trainActive = masterOverride || (long)(trainEndTime[i] - now) > 0;
     bool ledOn = false;
 
     if (trainActive) {

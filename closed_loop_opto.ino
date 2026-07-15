@@ -68,9 +68,10 @@ void loop() {
     anyLedOn |= ledOn;
   }
 
-  if (anyLedOn != lastAnyLedOn) {
-    digitalWrite(STATUS_LED_PIN, anyLedOn);
-    lastAnyLedOn = anyLedOn;
+  bool statusOn = masterOverride || anyLedOn;
+  if (statusOn != lastAnyLedOn) {
+    digitalWrite(STATUS_LED_PIN, statusOn);
+    lastAnyLedOn = statusOn;
   }
 
   delayMicroseconds(50);

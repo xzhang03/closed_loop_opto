@@ -33,8 +33,9 @@ void setup() {
   }
   pinMode(STATUS_LED_PIN, OUTPUT);
   digitalWrite(STATUS_LED_PIN, LOW);
-
   pinMode(MASTER_SWITCH_PIN, INPUT_PULLUP);
+
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -74,5 +75,18 @@ void loop() {
     lastAnyLedOn = statusOn;
   }
 
+  if (Serial.available()> 0){
+    while(Serial.available() > 0){
+      Serial.read();
+    }
+    Serial.print("digitalRead(MASTER_SWITCH_PIN) ");
+    Serial.println(digitalRead(MASTER_SWITCH_PIN));
+    Serial.print("masterOverride ");
+    Serial.println(masterOverride);
+    Serial.print("anyLedOn ");
+    Serial.println(anyLedOn);
+    Serial.print("lastAnyLedOn ");
+    Serial.println(lastAnyLedOn);
+  }
   delayMicroseconds(50);
 }
